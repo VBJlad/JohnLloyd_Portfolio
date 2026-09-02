@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>John Lloyd Danton — IT & Web Development Portfolio</title>
+  <meta name="description"
+    content="Personal portfolio of John Lloyd Danton, BS Information Technology graduate (Dean's Lister). Showcasing website development, C++, Java, JavaScript, SQL, and Agile sprint coordination experience." />
+  <meta name="author" content="John Lloyd Danton" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="John Lloyd Danton — IT & Web Development Portfolio" />
+  <meta property="og:description" content="Bridging software development fundamentals with Agile delivery to build reliable applications." />
+  <meta property="og:url" content="https://johnlloyd.dev" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Prevent FOUC -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('portfolio-theme');
+      var p = window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t || p);
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- ── Canvas background ─────────────────────────────────── -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ── NAVBAR ────────────────────────────────────────────── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" id="nav-logo">JL</a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero" class="nav-link" id="nav-home">Home</a></li>
+        <li><a href="#skills" class="nav-link" id="nav-skills">Skills</a></li>
+        <li><a href="#projects" class="nav-link" id="nav-projects">Projects</a></li>
+        <li><a href="#experience" class="nav-link" id="nav-experience">Experience</a></li>
+        <li><a href="#terminal-section" class="nav-link" id="nav-terminal">Terminal</a></li>
+        <li><a href="#contact" class="nav-link" id="nav-contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="status-pill" id="status-pill" style="display:none">
+          <span class="status-dot"></span>
+          <span class="status-pill-text"></span>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+        <a href="#" class="btn btn-primary" id="btn-resume" download style="padding:.5rem 1rem;font-size:.82rem">
+          Resume ↓
+        </a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- HERO SECTION                                           -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left: text content -->
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="section-label">👋 Hello, World</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-heading">
+            <span id="hero-name"></span><br />
+            <span class="gradient-text" id="hero-title"></span>
+          </h1>
+
+          <p class="hero-bio" id="hero-tagline"></p>
+          <p class="hero-bio" id="hero-bio" style="font-size:.95rem;margin-top:-.5rem"></p>
+
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary" id="btn-projects">
+              View Projects →
+            </a>
+            <a href="#contact" class="btn btn-secondary" id="btn-contact">
+              Get In Touch
+            </a>
+          </div>
+
+          <!-- Stats grid — populated by JS -->
+          <div class="hero-stats" id="hero-stats"></div>
+        </div>
+
+        <!-- Right: code preview card -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="code-card">
+            <div class="code-card-header">
+              <div class="code-dots">
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+              </div>
+              <div class="code-tabs">
+                <button class="code-tab active" data-pane="arch" id="tab-arch">App.java</button>
+                <button class="code-tab" data-pane="api" id="tab-api">queries.sql</button>
+                <button class="code-tab" data-pane="infra" id="tab-infra">sprint.js</button>
+              </div>
+            </div>
+            <div class="code-body">
+
+              <!-- App.java -->
+              <div class="code-pane active" id="pane-arch">
+                <span class="c-cmt">// Object-Oriented Application Model</span>
+                <span class="c-kw">public class</span> <span class="c-ty">SprintDeliverable</span> {
+                <span class="c-kw">private</span> <span class="c-ty">String</span> <span class="c-var">taskName</span>;
+                <span class="c-kw">private</span> <span class="c-ty">boolean</span> <span class="c-var">isCompleted</span>;
+
+                <span class="c-kw">public</span> <span class="c-fn">SprintDeliverable</span>(<span class="c-ty">String</span> name) {
+                <span class="c-var">this</span>.<span class="c-var">taskName</span> = name;
+                <span class="c-var">this</span>.<span class="c-var">isCompleted</span> = <span class="c-kw">true</span>;
+                }
+                }
+                <span class="code-cursor"></span>
+              </div>
+
+              <!-- queries.sql -->
+              <div class="code-pane" id="pane-api">
+                <span class="c-cmt">-- Relational Database Query & Joins</span>
+                <span class="c-kw">SELECT</span> p.project_name, s.sprint_id, COUNT(t.task_id) <span class="c-kw">AS</span> total_tasks
+                <span class="c-kw">FROM</span> projects p
+                <span class="c-kw">JOIN</span> sprints s <span class="c-kw">ON</span> p.id = s.project_id
+                <span class="c-kw">LEFT JOIN</span> tasks t <span class="c-kw">ON</span> s.sprint_id = t.sprint_id
+                <span class="c-kw">WHERE</span> t.status = <span class="c-str">'DELIVERED'</span>
+                <span class="c-kw">GROUP BY</span> p.project_name, s.sprint_id;
+                <span class="code-cursor"></span>
+              </div>
+
+              <!-- sprint.js -->
+              <div class="code-pane" id="pane-infra">
+                <span class="c-cmt">// Agile Sprint Velocity & Milestone Tracker</span>
+                <span class="c-kw">const</span> <span class="c-var">sprint</span> = {
+                <span class="c-var">account</span>: <span class="c-str">"StartupLab / CDAB"</span>,
+                <span class="c-var">tasks</span>: [<span class="c-str">"Wireframe"</span>, <span class="c-str">"Frontend UI"</span>, <span class="c-str">"Testing QA"</span>],
+                <span class="c-var">velocity</span>: <span class="c-num">100</span>, <span class="c-cmt">// % on-time completion</span>
+                <span class="c-fn">status</span>() { <span class="c-kw">return</span> <span class="c-str">`Delivered on schedule`</span>; }
+                };
+                <span class="code-cursor"></span>
+              </div>
+
+            </div><!-- /.code-body -->
+          </div><!-- /.code-card -->
+        </div><!-- /.hero-visual -->
+
+      </div><!-- /.hero-grid -->
+    </div><!-- /.container -->
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SKILLS & ARCHITECTURE SECTION                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="skills" class="section" aria-labelledby="skills-heading">
+    <div class="section-glow glow-left" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🛠 Tech Stack</span>
+        <h2 class="section-title" id="skills-heading">Skills &amp; <span class="gradient-text">Expertise</span></h2>
+      </div>
+
+      <div class="skills-layout">
+        <!-- Category tabs — populated by JS -->
+        <div class="skills-tabs" id="skill-tabs"></div>
+        <!-- Skill panels — populated by JS -->
+        <div class="skills-panels" id="skill-panels"></div>
+      </div>
+
+      <!-- Architecture pipeline diagram -->
+      <div class="arch-diagram reveal">
+        <div class="arch-title">System Architecture Pattern</div>
+        <div class="arch-pipeline" id="arch-pipeline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PROJECTS SECTION                                       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="projects" class="section" aria-labelledby="projects-heading">
+    <div class="section-glow glow-right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🚀 Portfolio</span>
+        <h2 class="section-title" id="projects-heading">Featured <span class="gradient-text">Projects</span></h2>
+        <p style="color:var(--text-secondary);margin-top:.75rem;font-size:.95rem">
+          Click any card for full case study details.
+        </p>
+      </div>
+
+      <!-- Filter buttons — populated by JS -->
+      <div class="project-filters" id="project-filters" role="group" aria-label="Project category filters"></div>
+
+      <!-- Project cards grid — populated by JS -->
+      <div class="projects-grid" id="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- EXPERIENCE / TIMELINE SECTION                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="experience" class="section" aria-labelledby="experience-heading">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">📅 Journey</span>
+        <h2 class="section-title" id="experience-heading">Experience &amp; <span class="gradient-text">Education</span>
+        </h2>
+      </div>
+      <!-- Timeline items — populated by JS -->
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TERMINAL PLAYGROUND                                    -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="terminal-section" class="section" aria-labelledby="terminal-heading">
+    <div class="section-glow glow-left" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">&gt;_ Terminal</span>
+        <h2 class="section-title" id="terminal-heading">Interactive <span class="gradient-text">CLI Playground</span>
+        </h2>
+        <p style="color:var(--text-secondary);margin-top:.75rem;font-size:.95rem">
+          Try commands like <code style="font-family:var(--font-mono);color:var(--text-accent)">whoami</code>,
+          <code style="font-family:var(--font-mono);color:var(--text-accent)">ls projects</code>,
+          <code style="font-family:var(--font-mono);color:var(--text-accent)">skills</code>, or
+          <code style="font-family:var(--font-mono);color:var(--text-accent)">coffee</code>.
+        </p>
+      </div>
+
+      <div class="terminal-wrap reveal">
+        <div class="terminal" role="region" aria-label="Interactive terminal">
+          <div class="terminal-titlebar">
+            <div class="code-dots">
+              <span class="code-dot"></span>
+              <span class="code-dot"></span>
+              <span class="code-dot"></span>
+            </div>
+            <span class="terminal-title">zsh — portfolio terminal</span>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="terminal-output" id="terminal-output"></div>
+            <div class="terminal-input-row">
+              <span class="terminal-prompt-label" id="terminal-prompt-display">johnlloyd@portfolio:~$</span>
+              <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command…"
+                autocomplete="off" spellcheck="false" aria-label="Terminal input" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- CONTACT SECTION                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="contact" class="section" aria-labelledby="contact-heading">
+    <div class="section-glow glow-right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">💬 Contact</span>
+        <h2 class="section-title" id="contact-heading">Let's <span class="gradient-text">Work Together</span></h2>
+      </div>
+
+      <div class="contact-layout">
+
+        <!-- Left: info -->
+        <div class="contact-info reveal">
+          <div class="contact-availability" id="contact-availability">
+            <span class="availability-icon">🟢</span>
+            <div class="availability-text">
+              <span class="availability-status">Available for hire</span>
+              <span class="availability-detail" id="local-clock"></span>
+            </div>
+          </div>
+
+          <div class="contact-methods" id="contact-methods"></div>
+
+          <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7">
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great.
+            Response time is typically within 24 hours.
+          </p>
+        </div>
+
+        <!-- Right: form -->
+        <div class="contact-form-card reveal reveal-delay-2">
+          <form id="contact-form" novalidate>
+            <div class="form-group" id="fg-name">
+              <label class="form-label" for="input-name">Your Name</label>
+              <input type="text" id="input-name" name="name" class="form-input" placeholder="John Doe" data-required
+                autocomplete="name" />
+              <span class="form-error">Name is required.</span>
+            </div>
+
+            <div class="form-group" id="fg-email">
+              <label class="form-label" for="input-email">Email Address</label>
+              <input type="email" id="input-email" name="email" class="form-input" placeholder="john@example.com"
+                data-required autocomplete="email" />
+              <span class="form-error">Valid email is required.</span>
+            </div>
+
+            <div class="form-group" id="fg-subject">
+              <label class="form-label" for="input-subject">Subject</label>
+              <input type="text" id="input-subject" name="subject" class="form-input"
+                placeholder="Project Inquiry / Consulting / Collaboration" data-required />
+              <span class="form-error">Subject is required.</span>
+            </div>
+
+            <div class="form-group" id="fg-message">
+              <label class="form-label" for="input-message">Message</label>
+              <textarea id="input-message" name="message" class="form-textarea"
+                placeholder="Tell me about your project, idea, or just say hi…" data-required></textarea>
+              <span class="form-error">Message is required.</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submit-btn" style="width:100%;justify-content:center">
+              Send Message 🚀
+            </button>
+          </form>
+        </div>
+
+      </div><!-- /.contact-layout -->
+    </div><!-- /.container -->
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- FOOTER                                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-social" id="footer-social"></div>
+        <p class="footer-copy">
+          © <span id="footer-year"></span> <span id="footer-name"></span>.
+          Crafted with ❤️ — <a href="#hero" style="color:var(--text-accent)">Back to top ↑</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PROJECT MODAL                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap">
+        <span class="project-category-badge" id="modal-category"></span>
+        <span style="font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted)" id="modal-year"></span>
+      </div>
+
+      <h3 class="section-title" id="modal-title" style="font-size:1.6rem;margin-bottom:1rem"></h3>
+      <p style="font-size:.9rem;color:var(--text-secondary);line-height:1.75;margin-bottom:1.5rem"
+        id="modal-description"></p>
+
+      <div style="margin-bottom:1.5rem">
+        <div
+          style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:.75rem">
+          Tech Stack</div>
+        <div id="modal-tags" style="display:flex;flex-wrap:wrap;gap:.4rem"></div>
+      </div>
+
+      <div style="margin-bottom:1.75rem">
+        <div
+          style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:.75rem">
+          Key Metrics</div>
+        <div id="modal-metrics" style="display:flex;flex-wrap:wrap;gap:.75rem"></div>
+      </div>
+
+      <div id="modal-links" style="display:flex;gap:.75rem;flex-wrap:wrap"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TOAST CONTAINER                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SCRIPTS                                                -->
+  <!-- data/content.js MUST load before main.js              -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <script src="data/content.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>
