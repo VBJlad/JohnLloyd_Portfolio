@@ -53,11 +53,18 @@
       </ul>
 
       <div class="nav-actions">
+        <button class="nav-cmd-btn" id="nav-cmd-btn" aria-label="Open command menu">
+          <span class="cmd-icon">⌘</span>
+          <span class="cmd-text">Search</span>
+          <kbd class="kbd-shortcut">⌘K</kbd>
+        </button>
         <div class="status-pill" id="status-pill" style="display:none">
           <span class="status-dot"></span>
           <span class="status-pill-text"></span>
         </div>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
         <a href="#" class="btn btn-primary" id="btn-resume" download style="padding:.5rem 1rem;font-size:.82rem">
           Resume ↓
         </a>
@@ -76,7 +83,11 @@
         <!-- Left: text content -->
         <div class="hero-content">
           <div class="hero-eyebrow">
-            <span class="section-label">👋 Hello, World</span>
+            <a href="#projects" class="saas-badge" id="hero-announcement">
+              <span class="badge-dot"></span>
+              <span class="badge-text">2026 Release • BS Information Technology (Dean's Lister)</span>
+              <span class="badge-arrow">→</span>
+            </a>
           </div>
 
           <h1 class="hero-title" id="hero-heading">
@@ -89,36 +100,87 @@
 
           <div class="hero-cta">
             <a href="#projects" class="btn btn-primary" id="btn-projects">
-              View Projects →
+              Explore Projects ↗
             </a>
             <a href="#contact" class="btn btn-secondary" id="btn-contact">
-              Get In Touch
+              Deploy / Contact
             </a>
+            <button class="cli-copy-pill" id="cli-copy-pill" aria-label="Copy CLI command" title="Click to copy command">
+              <span class="cli-prompt">$</span>
+              <code>npx johnlloyd.dev</code>
+              <span class="cli-copy-label" id="cli-copy-label">Copy</span>
+            </button>
+          </div>
+
+          <div class="hero-trust">
+            <span class="trust-item"><span class="trust-check">✓</span> City College of Tagaytay Dean's Lister</span>
+            <span class="trust-item"><span class="trust-check">✓</span> TOPCIT Level 2 Certified</span>
+            <span class="trust-item"><span class="trust-check">✓</span> 100% On-Time Milestones</span>
           </div>
 
           <!-- Stats grid — populated by JS -->
           <div class="hero-stats" id="hero-stats"></div>
         </div>
 
-        <!-- Right: code preview card -->
+        <!-- Right: SaaS telemetry & code preview card -->
         <div class="hero-visual" aria-hidden="true">
-          <div class="code-card">
+          <div class="code-card saas-console">
             <div class="code-card-header">
               <div class="code-dots">
                 <span class="code-dot"></span>
                 <span class="code-dot"></span>
                 <span class="code-dot"></span>
               </div>
+              <div class="console-url-bar">
+                <span class="url-lock"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+                <span class="url-text">telemetry.johnlloyd.dev/sprint-v1</span>
+                <span class="url-badge">● 24ms</span>
+              </div>
               <div class="code-tabs">
-                <button class="code-tab active" data-pane="arch" id="tab-arch">App.java</button>
+                <button class="code-tab active" data-pane="telemetry" id="tab-telemetry">Telemetry</button>
+                <button class="code-tab" data-pane="arch" id="tab-arch">App.java</button>
                 <button class="code-tab" data-pane="api" id="tab-api">queries.sql</button>
                 <button class="code-tab" data-pane="infra" id="tab-infra">sprint.js</button>
               </div>
             </div>
             <div class="code-body">
 
+              <!-- Telemetry Dashboard Pane -->
+              <div class="code-pane active" id="pane-telemetry">
+                <div class="telemetry-grid">
+                  <div class="telemetry-metric">
+                    <span class="tel-label">Sprint Velocity</span>
+                    <span class="tel-value">100%</span>
+                    <div class="tel-progress"><div class="tel-bar" style="width:100%"></div></div>
+                  </div>
+                  <div class="telemetry-metric">
+                    <span class="tel-label">Active Accounts</span>
+                    <span class="tel-value">5 Managed</span>
+                    <span class="tel-sub">StartupLab / CDAB</span>
+                  </div>
+                  <div class="telemetry-metric">
+                    <span class="tel-label">Sprint Blockers</span>
+                    <span class="tel-value">0 Blockers</span>
+                    <span class="tel-sub">Real-Time Risk Track</span>
+                  </div>
+                </div>
+
+                <div class="telemetry-feed-title">Live Agile Delivery Activity</div>
+                <div class="telemetry-feed">
+                  <div class="feed-item"><span class="feed-tag">[DELIVERED]</span> CDAB Cross-Border Website Redesign sprint milestone met on-time.</div>
+                  <div class="feed-item"><span class="feed-tag">[VERIFIED]</span> Pelvic Global dev schedule real-time tracking logged for executive review.</div>
+                  <div class="feed-item"><span class="feed-tag">[STRUCTURED]</span> StartupLab 5-account backlog tickets prioritized and groomed.</div>
+                  <div class="feed-item"><span class="feed-tag">[VALIDATED]</span> Relational schema normalization and Java OOP models passed verification.</div>
+                </div>
+
+                <div class="telemetry-footer">
+                  <a href="#terminal-section" class="telemetry-action-btn">Launch Interactive CLI →</a>
+                  <span class="telemetry-pulse"><span class="status-dot"></span> System Live</span>
+                </div>
+              </div>
+
               <!-- App.java -->
-              <div class="code-pane active" id="pane-arch">
+              <div class="code-pane" id="pane-arch">
                 <span class="c-cmt">// Object-Oriented Application Model</span>
                 <span class="c-kw">public class</span> <span class="c-ty">SprintDeliverable</span> {
                 <span class="c-kw">private</span> <span class="c-ty">String</span> <span class="c-var">taskName</span>;
@@ -168,10 +230,9 @@
   <!-- SKILLS & ARCHITECTURE SECTION                          -->
   <!-- ══════════════════════════════════════════════════════ -->
   <section id="skills" class="section" aria-labelledby="skills-heading">
-    <div class="section-glow glow-left" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">🛠 Tech Stack</span>
+        <span class="section-label">Technical Stack</span>
         <h2 class="section-title" id="skills-heading">Skills &amp; <span class="gradient-text">Expertise</span></h2>
       </div>
 
@@ -194,10 +255,9 @@
   <!-- PROJECTS SECTION                                       -->
   <!-- ══════════════════════════════════════════════════════ -->
   <section id="projects" class="section" aria-labelledby="projects-heading">
-    <div class="section-glow glow-right" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">🚀 Portfolio</span>
+        <span class="section-label">Selected Works</span>
         <h2 class="section-title" id="projects-heading">Featured <span class="gradient-text">Projects</span></h2>
         <p style="color:var(--text-secondary);margin-top:.75rem;font-size:.95rem">
           Click any card for full case study details.
@@ -218,7 +278,7 @@
   <section id="experience" class="section" aria-labelledby="experience-heading">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">📅 Journey</span>
+        <span class="section-label">Timeline</span>
         <h2 class="section-title" id="experience-heading">Experience &amp; <span class="gradient-text">Education</span>
         </h2>
       </div>
@@ -231,18 +291,27 @@
   <!-- TERMINAL PLAYGROUND                                    -->
   <!-- ══════════════════════════════════════════════════════ -->
   <section id="terminal-section" class="section" aria-labelledby="terminal-heading">
-    <div class="section-glow glow-left" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">&gt;_ Terminal</span>
-        <h2 class="section-title" id="terminal-heading">Interactive <span class="gradient-text">CLI Playground</span>
+        <span class="section-label">Interactive CLI</span>
+        <h2 class="section-title" id="terminal-heading">Command <span class="gradient-text">Interface</span>
         </h2>
         <p style="color:var(--text-secondary);margin-top:.75rem;font-size:.95rem">
-          Try commands like <code style="font-family:var(--font-mono);color:var(--text-accent)">whoami</code>,
-          <code style="font-family:var(--font-mono);color:var(--text-accent)">ls projects</code>,
-          <code style="font-family:var(--font-mono);color:var(--text-accent)">skills</code>, or
-          <code style="font-family:var(--font-mono);color:var(--text-accent)">coffee</code>.
+          Try typing commands below or click a quick command chip:
         </p>
+      </div>
+
+      <div class="terminal-quick-actions reveal">
+        <span class="quick-label">Quick Commands:</span>
+        <div class="chip-group">
+          <button class="terminal-chip" data-cmd="whoami">whoami</button>
+          <button class="terminal-chip" data-cmd="ls projects">ls projects</button>
+          <button class="terminal-chip" data-cmd="skills">skills</button>
+          <button class="terminal-chip" data-cmd="certifications">certifications</button>
+          <button class="terminal-chip" data-cmd="education">education</button>
+          <button class="terminal-chip" data-cmd="contact">contact</button>
+          <button class="terminal-chip" data-cmd="clear">clear</button>
+        </div>
       </div>
 
       <div class="terminal-wrap reveal">
@@ -272,10 +341,9 @@
   <!-- CONTACT SECTION                                        -->
   <!-- ══════════════════════════════════════════════════════ -->
   <section id="contact" class="section" aria-labelledby="contact-heading">
-    <div class="section-glow glow-right" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">💬 Contact</span>
+        <span class="section-label">Contact</span>
         <h2 class="section-title" id="contact-heading">Let's <span class="gradient-text">Work Together</span></h2>
       </div>
 
@@ -284,7 +352,7 @@
         <!-- Left: info -->
         <div class="contact-info reveal">
           <div class="contact-availability" id="contact-availability">
-            <span class="availability-icon">🟢</span>
+            <span class="availability-icon"></span>
             <div class="availability-text">
               <span class="availability-status">Available for hire</span>
               <span class="availability-detail" id="local-clock"></span>
@@ -331,7 +399,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary" id="submit-btn" style="width:100%;justify-content:center">
-              Send Message 🚀
+              Send Message →
             </button>
           </form>
         </div>
@@ -349,7 +417,7 @@
         <div class="footer-social" id="footer-social"></div>
         <p class="footer-copy">
           © <span id="footer-year"></span> <span id="footer-name"></span>.
-          Crafted with ❤️ — <a href="#hero" style="color:var(--text-accent)">Back to top ↑</a>
+          All rights reserved. — <a href="#hero" style="color:var(--text-primary);text-decoration:underline">Back to top ↑</a>
         </p>
       </div>
     </div>
@@ -386,6 +454,33 @@
       </div>
 
       <div id="modal-links" style="display:flex;gap:.75rem;flex-wrap:wrap"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- COMMAND PALETTE (⌘K MODAL)                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="cmd-palette-overlay" id="cmd-palette" role="dialog" aria-modal="true" aria-label="Command Menu">
+    <div class="cmd-palette-card">
+      <div class="cmd-palette-search-wrap">
+        <span class="cmd-search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+        <input type="text" id="cmd-palette-input" class="cmd-palette-input" placeholder="Type a command or jump to section…" autocomplete="off" />
+        <span class="kbd-shortcut">ESC</span>
+      </div>
+      <div class="cmd-palette-results" id="cmd-palette-results">
+        <div class="cmd-group-label">Navigation</div>
+        <button class="cmd-item" data-action="nav" data-target="#hero"><span>Home &amp; Overview</span><span class="cmd-shortcut">H</span></button>
+        <button class="cmd-item" data-action="nav" data-target="#skills"><span>Technical Capabilities &amp; Skills</span><span class="cmd-shortcut">S</span></button>
+        <button class="cmd-item" data-action="nav" data-target="#projects"><span>Selected Projects &amp; Case Studies</span><span class="cmd-shortcut">P</span></button>
+        <button class="cmd-item" data-action="nav" data-target="#experience"><span>Career Timeline &amp; Credentials</span><span class="cmd-shortcut">E</span></button>
+        <button class="cmd-item" data-action="nav" data-target="#terminal-section"><span>Developer CLI Playground</span><span class="cmd-shortcut">T</span></button>
+        <button class="cmd-item" data-action="nav" data-target="#contact"><span>Deployment &amp; Contact Inquiries</span><span class="cmd-shortcut">C</span></button>
+
+        <div class="cmd-group-label">Actions</div>
+        <button class="cmd-item" data-action="theme"><span>Toggle Theme (Dark / Light)</span><span class="cmd-shortcut">⌘T</span></button>
+        <button class="cmd-item" data-action="resume"><span>Download Resume (PDF)</span><span class="cmd-shortcut">⌘R</span></button>
+        <button class="cmd-item" data-action="copy-cli"><span>Copy CLI Snippet (npx johnlloyd.dev)</span><span class="cmd-shortcut">↵</span></button>
+      </div>
     </div>
   </div>
 

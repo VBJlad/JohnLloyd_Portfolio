@@ -64,3 +64,4 @@ To change any information on the website (add new projects, update skills, chang
 - **Email:** [lloyd.danton02@gmail.com](mailto:lloyd.danton02@gmail.com)
 - **Phone:** +63 919 775 2848
 - **LinkedIn:** [linkedin.com/in/johnlloyddanton](https://linkedin.com/in/johnlloyddanton)
+- **GitHub:** [github.com/VBJlad](https://github.com/VBJlad)

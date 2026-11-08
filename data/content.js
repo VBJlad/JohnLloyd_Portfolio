@@ -15,13 +15,13 @@ const PORTFOLIO = {
     title:       "IT Graduate • Web Development & Agile Project Delivery",
     tagline:     "Bridging software development fundamentals with Agile delivery to build reliable applications.",
     bio:         "Bachelor of Science in Information Technology graduate from City College of Tagaytay (Dean's Lister) with hands-on experience supporting website development, digital projects, and Agile delivery. Skilled in C++, Java, JavaScript, SQL, WordPress, and cross-functional team coordination.",
-    location:    "Tagaytay, Calabarzon, Philippines 🇵🇭",
+    location:    "Tagaytay, Calabarzon, Philippines",
     email:       "lloyd.danton02@gmail.com",
     phone:       "+63 919 775 2848",
     resumeUrl:   "assets/resume.pdf",
     avatar:      "",
     social: {
-      github:    "https://github.com/lloydDanton",
+      github:    "https://github.com/VBJlad",
       linkedin:  "https://linkedin.com/in/johnlloyddanton",
       twitter:   "",
       discord:   "",
@@ -46,7 +46,7 @@ const PORTFOLIO = {
   /* ─── SKILLS ────────────────────────────────────────────── */
   skillCategories: [
     {
-      id: "programming", label: "Programming", icon: "💻",
+      id: "programming", label: "Programming", icon: "⌨",
       skills: [
         { name: "JavaScript (ES6+)",       level: 85 },
         { name: "Java (OOP)",              level: 80 },
@@ -57,7 +57,7 @@ const PORTFOLIO = {
       ],
     },
     {
-      id: "webdev", label: "Web Development", icon: "🌐",
+      id: "webdev", label: "Web Development", icon: "⌗",
       skills: [
         { name: "HTML5 & Semantic Markup", level: 92 },
         { name: "CSS3 / Modern Layouts",   level: 88 },
@@ -68,7 +68,7 @@ const PORTFOLIO = {
       ],
     },
     {
-      id: "agile", label: "Agile & Delivery", icon: "⚡",
+      id: "agile", label: "Agile & Delivery", icon: "↻",
       skills: [
         { name: "Agile / Scrum Delivery",   level: 92 },
         { name: "Sprint Planning & Review", level: 90 },
@@ -79,7 +79,7 @@ const PORTFOLIO = {
       ],
     },
     {
-      id: "tools", label: "Tools & QA", icon: "🛠️",
+      id: "tools", label: "Tools & QA", icon: "⚙︎",
       skills: [
         { name: "ClickUp Project Tracking", level: 90 },
         { name: "Notion Knowledge Base",    level: 88 },
@@ -141,7 +141,7 @@ const PORTFOLIO = {
       category:    "fullstack",
       tags:        ["Java", "SQL", "OOP", "Relational DB", "Testing"],
       metrics:     { database: "SQL Normalized", architecture: "OOP Principles", testing: "Validated" },
-      github:      "https://github.com/lloydDanton",
+      github:      "https://github.com/VBJlad",
       demo:        "",
       featured:    false,
       year:        2025,
@@ -154,7 +154,7 @@ const PORTFOLIO = {
       category:    "ai",
       tags:        ["HTML5", "CSS3", "JavaScript", "WordPress", "Responsive"],
       metrics:     { responsiveness: "Mobile-First", compatibility: "Cross-Browser", cms: "WordPress" },
-      github:      "https://github.com/lloydDanton",
+      github:      "https://github.com/VBJlad",
       demo:        "",
       featured:    false,
       year:        2025,
@@ -233,10 +233,10 @@ const PORTFOLIO = {
       certifications: "1. TOPCIT Level 2 Competency Certificate of Excellence\n2. ICT User Certification Examination",
       education:      "Bachelor of Science in Information Technology — City College of Tagaytay (July 2026)\nHonors: Dean's Lister A.Y. 2023",
       contact:        "Email: lloyd.danton02@gmail.com\nPhone: +63 919 775 2848\nLocation: Tagaytay, Calabarzon, Philippines",
-      location:       "Tagaytay, Calabarzon, Philippines 🇵🇭 (UTC+8)",
-      status:         "🟢 Open to entry-level & associate opportunities in Software Engineering, Web Development, and IT Project Delivery.",
+      location:       "Tagaytay, Calabarzon, Philippines (UTC+8)",
+      status:         "Open to entry-level & associate opportunities in Software Engineering, Web Development, and IT Project Delivery.",
       sudo:           "Access granted: Welcome to John Lloyd's team!",
-      coffee:         "☕ Sprint task ready. Backlog groomed. Ready to build and coordinate!",
+      coffee:         "Sprint task ready. Backlog groomed. Ready to build and coordinate!",
     },
   },
 

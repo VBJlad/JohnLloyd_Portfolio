@@ -12,6 +12,8 @@
   ──────────────────────────────────────────────────────────── */
   const ThemeEngine = {
     key: 'portfolio-theme',
+    sunIcon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>',
+    moonIcon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>',
     init() {
       const saved = localStorage.getItem(this.key);
       const pref  = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -21,7 +23,10 @@
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem(this.key, theme);
       const btn = document.getElementById('theme-toggle');
-      if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      if (btn) {
+        btn.innerHTML = theme === 'dark' ? this.sunIcon : this.moonIcon;
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      }
     },
     toggle() {
       const cur = document.documentElement.getAttribute('data-theme');
@@ -70,6 +75,9 @@
       const { ctx, canvas, particles, mouse } = this;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const fillBase = isLight ? '0, 0, 0' : '255, 255, 255';
+
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -88,7 +96,7 @@
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})`;
+        ctx.fillStyle = `rgba(${fillBase}, ${p.alpha * (isLight ? 0.25 : 0.35)})`;
         ctx.fill();
       }
 
@@ -102,8 +110,8 @@
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.12 * (1 - dist / 130)})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(${fillBase}, ${(isLight ? 0.05 : 0.08) * (1 - dist / 130)})`;
+            ctx.lineWidth = 0.7;
             ctx.stroke();
           }
         }
@@ -198,6 +206,25 @@
 
       // Code card tabs
       this.initCodeTabs();
+
+      // CLI copy pill
+      const cliPill = document.getElementById('cli-copy-pill');
+      if (cliPill) {
+        cliPill.addEventListener('click', () => {
+          const cmdText = 'npx johnlloyd.dev';
+          navigator.clipboard.writeText(cmdText).then(() => {
+            const label = document.getElementById('cli-copy-label');
+            if (label) {
+              const orig = label.textContent;
+              label.textContent = 'Copied!';
+              setTimeout(() => { label.textContent = orig; }, 1800);
+            }
+            Toast.show(`Copied command: ${cmdText}`, 'info');
+          }).catch(() => {
+            Toast.show(`Command: ${cmdText}`, 'info');
+          });
+        });
+      }
     },
 
     set(id, text) {
@@ -390,7 +417,7 @@
      7. TIMELINE RENDERER
   ──────────────────────────────────────────────────────────── */
   const TimelineRenderer = {
-    icons: { work: '💼', education: '🎓' },
+    icons: { work: '●', education: '◆' },
     init() {
       const container = document.getElementById('timeline');
       if (!container) return;
@@ -409,7 +436,7 @@
               </div>
               <div class="timeline-meta">
                 <span class="timeline-period">${item.period}</span>
-                <span class="timeline-location">📍 ${item.location}</span>
+                <span class="timeline-location"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>${item.location}</span>
               </div>
             </div>
             <ul class="timeline-achievements">
@@ -469,6 +496,22 @@
           input.value = this.historyIdx === -1 ? '' : this.history[this.historyIdx];
         }
       });
+
+      // Quick command chips
+      document.querySelectorAll('.terminal-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const cmd = chip.dataset.cmd;
+          if (!cmd) return;
+          input.value = '';
+          this.history.unshift(cmd);
+          this.historyIdx = -1;
+          this.run(cmd, output, terminal);
+          setTimeout(() => {
+            const body = output.closest('.terminal-body');
+            if (body) body.scrollTop = 9999;
+          }, 50);
+        });
+      });
     },
 
     run(cmd, output, terminal) {
@@ -522,11 +565,11 @@
       const methodsContainer = document.getElementById('contact-methods');
       if (methodsContainer) {
         const methods = [
-          { icon: '✉️', label: 'Email', value: meta.email, href: `mailto:${meta.email}` },
-          ...(meta.phone ? [{ icon: '📞', label: 'Phone', value: meta.phone, href: `tel:${meta.phone.replace(/\s+/g, '')}` }] : []),
-          { icon: '📍', label: 'Location', value: meta.location, href: '#contact' },
-          { icon: '💼', label: 'LinkedIn', value: meta.social.linkedin ? 'linkedin.com/in/' + meta.social.linkedin.split('/in/')[1] : '', href: meta.social.linkedin },
-          { icon: '🐙', label: 'GitHub', value: meta.social.github ? 'github.com/' + meta.social.github.split('github.com/')[1] : '', href: meta.social.github },
+          { icon: '✉', label: 'Email', value: meta.email, href: `mailto:${meta.email}` },
+          ...(meta.phone ? [{ icon: '☎', label: 'Phone', value: meta.phone, href: `tel:${meta.phone.replace(/\s+/g, '')}` }] : []),
+          { icon: '⚲', label: 'Location', value: meta.location, href: '#contact' },
+          { icon: 'in', label: 'LinkedIn', value: meta.social.linkedin ? 'linkedin.com/in/' + meta.social.linkedin.split('/in/')[1] : '', href: meta.social.linkedin },
+          { icon: 'gh', label: 'GitHub', value: meta.social.github ? 'github.com/' + meta.social.github.split('github.com/')[1] : '', href: meta.social.github },
         ].filter(m => m.href && !m.href.endsWith('undefined') && !m.href.endsWith('/'));
 
         methodsContainer.innerHTML = methods.map(m => `
@@ -549,7 +592,7 @@
             timeZone: availability.timezone,
             hour: '2-digit', minute: '2-digit', second: '2-digit',
           });
-          clockEl.textContent = `🕒 Local time: ${timeStr} (${availability.timezone})`;
+          clockEl.textContent = `Local time: ${timeStr} (${availability.timezone})`;
         };
         updateClock();
         setInterval(updateClock, 1000);
@@ -575,7 +618,7 @@
           btn.textContent = 'Send Message';
           btn.disabled = false;
           form.reset();
-          Toast.show('Message sent! I\'ll get back to you shortly 🚀', 'success');
+          Toast.show('Message sent! I will get back to you shortly.', 'success');
         }, 1400);
       });
     },
@@ -701,7 +744,7 @@
     show(message, type = 'info') {
       const container = document.getElementById('toast-container');
       if (!container) return;
-      const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+      const icons = { success: '✓', error: '✕', info: 'i' };
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
       toast.innerHTML = `<span>${icons[type]}</span><span>${message}</span>`;
@@ -760,12 +803,12 @@
   ──────────────────────────────────────────────────────────── */
   const ArchRenderer = {
     nodes: [
-      { icon: '🌍', label: 'Browser',   sub: 'HTTP/3' },
-      { icon: '🔒', label: 'Edge CDN',  sub: 'SSL / WAF' },
-      { icon: '⚡', label: 'API Gateway', sub: 'Rate Limit' },
-      { icon: '🖥️', label: 'Server',    sub: 'Node / Go' },
-      { icon: '🗄️', label: 'Database',  sub: 'PostgreSQL' },
-      { icon: '⚙️', label: 'Cache',     sub: 'Redis' },
+      { icon: '◻', label: 'Client UI',   sub: 'Web / Mobile' },
+      { icon: '◫', label: 'CDN / Edge', sub: 'SSL & Proxy' },
+      { icon: '❖', label: 'Gateway',    sub: 'Rate Limit' },
+      { icon: '⬡', label: 'Backend',    sub: 'Java / Node' },
+      { icon: '▤', label: 'Database',   sub: 'SQL / Relational' },
+      { icon: '◈', label: 'Testing',    sub: 'QA & Logs' },
     ],
     init() {
       const container = document.getElementById('arch-pipeline');
@@ -810,6 +853,9 @@
     // Terminal
     Terminal.init();
 
+    // Command Palette (⌘K)
+    CommandPalette.init();
+
     // Scroll animations (must come after renderers so .reveal elements exist)
     ScrollAnimations.init();
 
@@ -823,6 +869,158 @@
       }
     });
   }
+
+  /* ────────────────────────────────────────────────────────────
+     16. COMMAND PALETTE (⌘K MODAL)
+  ──────────────────────────────────────────────────────────── */
+  const CommandPalette = {
+    overlay: null,
+    input: null,
+    results: null,
+    items: [],
+    activeIndex: 0,
+
+    init() {
+      this.overlay = document.getElementById('cmd-palette');
+      this.input = document.getElementById('cmd-palette-input');
+      this.results = document.getElementById('cmd-palette-results');
+      if (!this.overlay || !this.input) return;
+
+      this.items = Array.from(this.overlay.querySelectorAll('.cmd-item'));
+
+      // Navbar trigger
+      document.getElementById('nav-cmd-btn')?.addEventListener('click', () => this.open());
+
+      // Global keyboard shortcut
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          this.toggle();
+        } else if (e.key === 'Escape' && this.overlay.classList.contains('open')) {
+          this.close();
+        }
+      });
+
+      // Close on backdrop click
+      this.overlay.addEventListener('click', (e) => {
+        if (e.target === this.overlay) this.close();
+      });
+
+      // Search filtering
+      this.input.addEventListener('input', () => this.filter());
+
+      // Keyboard navigation in palette
+      this.input.addEventListener('keydown', (e) => {
+        const visibleItems = this.getVisibleItems();
+        if (!visibleItems.length) return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.activeIndex = (this.activeIndex + 1) % visibleItems.length;
+          this.updateActiveItem(visibleItems);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.activeIndex = (this.activeIndex - 1 + visibleItems.length) % visibleItems.length;
+          this.updateActiveItem(visibleItems);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const active = visibleItems[this.activeIndex];
+          if (active) this.execute(active);
+        }
+      });
+
+      // Click on item
+      this.items.forEach(item => {
+        item.addEventListener('click', () => this.execute(item));
+      });
+    },
+
+    toggle() {
+      if (this.overlay.classList.contains('open')) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
+
+    open() {
+      this.overlay.classList.add('open');
+      this.input.value = '';
+      this.filter();
+      setTimeout(() => this.input.focus(), 60);
+      document.body.style.overflow = 'hidden';
+    },
+
+    close() {
+      this.overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    },
+
+    filter() {
+      const q = this.input.value.trim().toLowerCase();
+      let firstVisible = -1;
+
+      this.items.forEach((item, idx) => {
+        const text = item.textContent.toLowerCase();
+        const matches = !q || text.includes(q);
+        item.style.display = matches ? 'flex' : 'none';
+        if (matches && firstVisible === -1) firstVisible = idx;
+      });
+
+      // Update section headers visibility
+      this.overlay.querySelectorAll('.cmd-group-label').forEach(label => {
+        let sibling = label.nextElementSibling;
+        let hasVisible = false;
+        while (sibling && !sibling.classList.contains('cmd-group-label')) {
+          if (sibling.style.display !== 'none') hasVisible = true;
+          sibling = sibling.nextElementSibling;
+        }
+        label.style.display = hasVisible ? 'block' : 'none';
+      });
+
+      const visible = this.getVisibleItems();
+      this.activeIndex = 0;
+      this.updateActiveItem(visible);
+    },
+
+    getVisibleItems() {
+      return this.items.filter(item => item.style.display !== 'none');
+    },
+
+    updateActiveItem(visibleItems) {
+      this.items.forEach(i => i.classList.remove('active'));
+      if (visibleItems[this.activeIndex]) {
+        visibleItems[this.activeIndex].classList.add('active');
+        visibleItems[this.activeIndex].scrollIntoView({ block: 'nearest' });
+      }
+    },
+
+    execute(item) {
+      const action = item.dataset.action;
+      this.close();
+
+      if (action === 'nav') {
+        const target = document.querySelector(item.dataset.target);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (action === 'theme') {
+        ThemeEngine.toggle();
+      } else if (action === 'resume') {
+        const resumeBtn = document.getElementById('btn-resume');
+        if (resumeBtn && resumeBtn.href) {
+          window.open(resumeBtn.href, '_blank');
+        }
+      } else if (action === 'copy-cli') {
+        const cmdText = 'npx johnlloyd.dev';
+        navigator.clipboard.writeText(cmdText).then(() => {
+          Toast.show(`Copied command: ${cmdText}`, 'info');
+        }).catch(() => {
+          Toast.show(`Command: ${cmdText}`, 'info');
+        });
+      }
+    },
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
